@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рішення квадратного рівняння</title>
+</head>
+<body>
+    <script>
+        function getUserInput(message) {
+            let input;
+            do {
+                input = prompt(message);
+                if (input === null) {
+                    alert("Жаль. Сподіваюсь ще побачитись.");
+                    return null;
+                }
+                input = parseFloat(input);
+            } while (isNaN(input));
+            return input;
+        }
+
+        function solveQuadraticEquation() {
+            alert("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0");
+
+            const a = getUserInput("Введіть a");
+            if (a === null) {
+                return;
+            }
+
+            const b = getUserInput("Введіть b");
+            if (b === null) {
+                return;
+            }
+
+            const c = getUserInput("Введіть c");
+            if (c === null) {
+                return;
+            }
+
+            const discriminant = b * b - 4 * a * c;
+
+            if (a === 0) {
+                alert("a = 0. Рівняння не має рішень");
+                return;
+            }
+
+            if (discriminant < 0) {
+                alert("D < 0. Рівняння не має рішень");
+            } else if (discriminant === 0) {
+                const x = -b / (2 * a);
+                alert("D = 0. Єдиний корінь рівняння: " + x);
+            } else {
+                const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                alert("D > 0. Корені рівняння: " + x1 + ", " + x2);
+            }
+        }
+
+        solveQuadraticEquation();
+    </script>
+</body>
+</html>
