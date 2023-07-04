@@ -18,41 +18,60 @@
             return input;
         }
 
-        function solveQuadraticEquation() {
-            alert("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0");
-
-            const a = getUserInput("Введіть a");
-            if (a === null) {
-                return;
-            }
-
-            const b = getUserInput("Введіть b");
-            if (b === null) {
-                return;
-            }
-
-            const c = getUserInput("Введіть c");
-            if (c === null) {
-                return;
+        function calculateQuadraticEquation(a, b, c, ifInvalid) {
+            if (a === 0) {
+                ifInvalid();
+                return null;
             }
 
             const discriminant = b * b - 4 * a * c;
 
-            if (a === 0) {
-                alert("a = 0. Рівняння не має рішень");
-                return;
-            }
-
             if (discriminant < 0) {
-                alert("D < 0. Рівняння не має рішень");
+                return { d: "D < 0", x1: null, x2: null };
             } else if (discriminant === 0) {
                 const x = -b / (2 * a);
-                alert("D = 0. Єдиний корінь рівняння: " + x);
+                return { d: "D = 0", x1: x, x2: x };
             } else {
                 const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
                 const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-                alert("D > 0. Корені рівняння: " + x1 + ", " + x2);
+                return { d: "D > 0", x1: x1, x2: x2 };
             }
+        }
+
+        function solveQuadraticEquation() {
+            alert("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0");
+
+            const getInput = (variableName) => {
+                const message = `Введіть ${variableName}`;
+                return getUserInput(message);
+            };
+
+            const ifInvalid = () => {
+                alert("a = 0, функція не має рішень");
+            };
+
+            const a = getInput("a");
+            if (a === null) {
+                return;
+            }
+
+            const b = getInput("b");
+            if (b === null) {
+                return;
+            }
+
+            const c = getInput("c");
+            if (c === null) {
+                return;
+            }
+
+            const result = calculateQuadraticEquation(a, b, c, ifInvalid);
+
+            if (result === null) {
+                return;
+            }
+
+            alert(`D: ${result.d}\nx1: ${result.x1}\nx2: ${result.x2}`);
         }
 
         solveQuadraticEquation();
